@@ -1,0 +1,12 @@
+import { chromium } from 'playwright-core'
+const b = await chromium.launch({ executablePath: '/home/siva/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome', args: ['--no-sandbox'] })
+const p = await b.newPage({ viewport: { width: 1280, height: 900 } })
+await p.goto('https://siva-sub.github.io/tenure/retrofit/', { waitUntil: 'networkidle' })
+await p.waitForTimeout(1200)
+console.log('url   ', p.url())
+console.log('h1    ', (await p.locator('h1').textContent())?.trim())
+console.log('title ', await p.title())
+await p.getByRole('link', { name: 'Telemetry' }).first().click()
+await p.waitForTimeout(1000)
+console.log('after nav:', p.url(), '|', (await p.locator('h1').textContent())?.trim())
+await b.close()

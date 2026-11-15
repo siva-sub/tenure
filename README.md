@@ -148,8 +148,9 @@ avoid the generic AI look. Concretely:
 | --- | --- |
 | `tsc -b` (strict, `noUncheckedIndexedAccess`) | clean |
 | `vitest run` | 40 tests passing |
-| axe-core, WCAG 2.1 A + AA, six routes | 0 serious/critical violations |
+| axe-core, WCAG 2.1 A + AA, five routes (local and live) | 0 serious/critical violations |
 | Playwright interaction suite | 14/14 checks passing |
+| Live deployment (browser, all routes + deep links) | 13/13 checks passing |
 | Console errors / failed requests | none |
 | Horizontal overflow, 390 / 1280 / 1440 px | none |
 | Production bundle | 158 kB gzipped JS (React + router + query + zod); fonts self-hosted |

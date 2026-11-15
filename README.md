@@ -28,8 +28,9 @@ The site is deployed to **GitHub Pages** by GitHub Actions on every push to `mai
 
 Two static-hosting details matter for a client-routed SPA, and both are handled:
 
-- **Deep links** — Pages has no rewrite rules, so `scripts/postbuild.mjs` writes `dist/404.html` as a copy of
-  the shell. A request to `/tenure/retrofit` boots the router and renders the right page rather than a 404.
+- **Deep links** — Pages has no rewrite rules, so `scripts/postbuild.mjs` prerenders a directory shell for
+  each route (`/tenure/retrofit/` answers **200**) and keeps `dist/404.html` as the shell for anything
+  unmatched, so unknown paths still boot the router instead of showing a host error page.
 - **Subpath assets** — `base` is driven by `VITE_BASE`, and the font and icon URLs are relative, so the same
   build works at a domain root or under a project subpath. `_redirects`/`_headers` ship too, for hosts that
   read them.

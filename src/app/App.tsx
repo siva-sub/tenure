@@ -8,8 +8,13 @@ import { TelemetryPage } from '@/pages/TelemetryPage'
 import { ProgrammesPage } from '@/pages/ProgrammesPage'
 
 export function App() {
+  // The app is served from /tenure/ on GitHub Pages and from / in development.
+  // Without a basename the router sees the deploy subpath as part of the route,
+  // matches nothing, and silently falls through to the index redirect.
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, '')
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route element={<Shell />}>
           <Route index element={<RecordPage />} />

@@ -1,0 +1,619 @@
+/* ==========================================================================
+   Application shell — the rail, the topbar, the document frame
+   ========================================================================== */
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   Rail — dark site office. Sticky, full height, with a contour motif.
+   -------------------------------------------------------------------------- */
+
+.rail {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--chrome);
+  color: var(--chrome-ink);
+  border-right: 1px solid #000;
+  overflow: hidden auto;
+  z-index: 20;
+}
+
+/* Topographic contour lines — the island's terrain, abstracted. */
+.rail::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'%3E%3Cg fill='none' stroke='%232b4034' stroke-width='1'%3E%3Cpath d='M-40 300c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 340c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 380c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 260c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 220c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 180c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 120c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3Cpath d='M-40 60c70-46 118-18 168-52s86-96 150-88 90 48 152 34'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 420px 420px;
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.5) 45%, transparent 78%);
+}
+
+.rail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.rail__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  border-bottom: 1px solid var(--chrome-rule);
+}
+
+.mark {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  color: var(--sodium);
+}
+
+.rail__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 420;
+  font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 32;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  color: var(--chrome-ink);
+}
+
+.rail__tag {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chrome-ink-3);
+}
+
+.rail__section {
+  padding: var(--s-4) var(--s-4) var(--s-3);
+}
+
+.rail__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--s-1) var(--s-2);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chrome-ink-3);
+}
+
+.rail__label button {
+  color: var(--chrome-ink-3);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.rail__label button:hover {
+  color: var(--sodium);
+}
+
+/* Property switcher — the two homes, as physical tabs in a file. */
+.prop {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--s-3);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  color: var(--chrome-ink-2);
+  transition:
+    background var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+}
+
+.prop + .prop {
+  margin-top: 2px;
+}
+
+.prop:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--chrome-ink);
+}
+
+.prop.is-active {
+  background: var(--chrome-2);
+  border-color: var(--chrome-3);
+  color: var(--chrome-ink);
+}
+
+.prop.is-active::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: var(--sodium);
+  border-radius: 2px;
+}
+
+.prop__name {
+  display: block;
+  font-size: var(--step-0);
+  font-weight: 560;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+}
+
+.prop__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em 0.5em;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--chrome-ink-3);
+}
+
+.prop__meta span {
+  white-space: nowrap;
+}
+
+.prop__meta span:not(:last-child)::after {
+  content: '·';
+  margin-left: 0.5em;
+  opacity: 0.6;
+}
+
+/* Nav */
+.rail__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--s-3) var(--s-3) var(--s-4);
+  border-top: 1px solid var(--chrome-rule);
+  margin-top: var(--s-2);
+}
+
+.navlink {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0.5rem var(--s-2) 0.5rem var(--s-3);
+  border-radius: var(--r-sm);
+  color: var(--chrome-ink-2);
+  text-decoration: none;
+  transition:
+    background var(--dur-2) var(--ease-out),
+    color var(--dur-2) var(--ease-out);
+}
+
+.navlink:hover {
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--chrome-ink);
+}
+
+.navlink.is-active {
+  background: rgba(233, 161, 59, 0.1);
+  color: var(--chrome-ink);
+}
+
+.navlink__num {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--chrome-ink-3);
+  transition: color var(--dur-2) var(--ease-out);
+}
+
+.navlink.is-active .navlink__num {
+  color: var(--sodium);
+}
+
+.navlink__label {
+  font-size: var(--step-0);
+  font-weight: 500;
+  letter-spacing: -0.004em;
+}
+
+.navlink__meta {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  padding: 1px 5px;
+  border: 1px solid var(--chrome-3);
+  border-radius: 2px;
+  color: var(--chrome-ink-3);
+}
+
+.navlink.is-active .navlink__meta {
+  border-color: rgba(233, 161, 59, 0.4);
+  color: var(--sodium);
+}
+
+.rail__foot {
+  margin-top: auto;
+  padding: var(--s-4);
+  border-top: 1px solid var(--chrome-rule);
+  display: grid;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: var(--chrome-ink-3);
+}
+
+.rail__status {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--chrome-ink-3);
+  flex: none;
+}
+
+.dot--live {
+  background: #59b58a;
+  box-shadow: 0 0 0 3px rgba(89, 181, 138, 0.16);
+  animation: pulse 2.8s var(--ease-in-out) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Topbar
+   -------------------------------------------------------------------------- */
+
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: 56px;
+  padding: 0 var(--doc-gutter);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  border-bottom: 1px solid var(--rule);
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+.crumbs__sep {
+  color: var(--ink-4);
+}
+
+.crumbs__here {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex: none;
+}
+
+/* --------------------------------------------------------------------------
+   Page frame
+   -------------------------------------------------------------------------- */
+
+.page {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--s-7) var(--doc-gutter) var(--s-9);
+  animation: fade var(--dur-3) var(--ease-out) both;
+}
+
+.page__head {
+  display: grid;
+  gap: var(--s-3);
+  padding-bottom: var(--s-6);
+  margin-bottom: var(--s-6);
+  border-bottom: 1px solid var(--rule-strong);
+  position: relative;
+}
+
+.page__head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: clamp(64px, 18%, 200px);
+  background: var(--laterite);
+  transform-origin: left center;
+  animation: draw-rule var(--dur-5) var(--ease-out) both;
+}
+
+.page__title {
+  max-width: 22ch;
+}
+
+.page__lede {
+  max-width: 68ch;
+  font-size: var(--step-2);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.page__lede strong {
+  font-weight: 560;
+}
+
+.page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+/* Section heading inside a page */
+.sec {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.sec + .sec {
+  margin-top: var(--s-7);
+}
+
+.sec__head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.sec__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  font-variation-settings: 'SOFT' 30, 'WONK' 1, 'opsz' 48;
+  letter-spacing: -0.015em;
+}
+
+.sec__num {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  color: var(--laterite);
+}
+
+.sec__aside {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — below 1024px the rail becomes a header band with a scrolling
+   nav. One DOM, no drawer to get stuck open.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    position: static;
+    height: auto;
+    overflow: hidden;
+  }
+
+  /* Positioned relative to a static ancestor once the rail un-sticks, this
+     layer would otherwise paint the contour lines across the whole page. */
+  .rail::before {
+    display: none;
+  }
+
+  .rail__brand {
+    padding: var(--s-4) var(--s-4) var(--s-3);
+  }
+
+  .rail__props {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-2);
+    padding: 0 var(--s-4) var(--s-3);
+  }
+
+  .rail__section {
+    padding-top: var(--s-2);
+  }
+
+  .rail__nav {
+    flex-direction: row;
+    gap: 2px;
+    overflow-x: auto;
+    margin-top: 0;
+    padding: var(--s-2) var(--s-3);
+    border-top: 1px solid var(--chrome-rule);
+    scrollbar-width: none;
+    /* Fade the right edge so the strip reads as scrollable. */
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 28px), transparent 100%);
+  }
+
+  .rail__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navlink {
+    grid-template-columns: auto;
+    padding: 0.4rem 0.7rem;
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .navlink__num,
+  .navlink__meta {
+    display: none;
+  }
+
+  .rail__foot {
+    display: none;
+  }
+
+  .page {
+    padding-top: var(--s-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .rail__props {
+    grid-template-columns: 1fr;
+  }
+
+  .page__lede {
+    font-size: var(--step-1);
+  }
+
+  .sec__head {
+    grid-template-columns: 1fr;
+    gap: var(--s-1);
+  }
+
+  .sec__aside {
+    text-align: left;
+  }
+
+  .crumbs {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  /* The topbar cannot hold a three-part breadcrumb and three actions at once. */
+  .crumbs {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .crumbs > span:not(.crumbs__here) {
+    display: none;
+  }
+
+  .topbar__actions .btn--ghost:nth-of-type(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .rail__brand {
+    padding: var(--s-3) var(--s-4);
+    gap: var(--s-2);
+  }
+
+  .mark {
+    width: 26px;
+    height: 26px;
+  }
+
+  .rail__wordmark {
+    font-size: 1.15rem;
+  }
+
+  .rail__tag,
+  .rail__label {
+    display: none;
+  }
+
+  .rail__section {
+    padding: var(--s-2) var(--s-3) 0;
+  }
+
+  /* Two homes side by side; the lease, not the unit number, is the useful
+     differentiator at this width. */
+  .rail__props {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4px;
+    padding: 0;
+  }
+
+  .prop {
+    padding: 7px 9px;
+  }
+
+  .prop__name {
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .prop__meta {
+    margin-top: 2px;
+    font-size: 9px;
+  }
+
+  .prop__meta span:first-child {
+    display: none;
+  }
+
+  .rail__nav {
+    margin-top: var(--s-2);
+    padding: var(--s-2) 0 var(--s-2) var(--s-2);
+  }
+
+  .navlink {
+    padding: 0.35rem 0.6rem;
+  }
+
+  .topbar {
+    padding-inline: var(--s-3);
+    gap: var(--s-2);
+    min-height: 50px;
+  }
+}

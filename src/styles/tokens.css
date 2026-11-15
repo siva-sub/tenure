@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Tenure — design tokens
+   --------------------------------------------------------------------------
+   A committed direction rather than a neutral one: the chrome is a dark,
+   dense site-office (concrete green-black, sodium light), and the document
+   surface is warm paper. Data is set in a wide monospace; display type is a
+   high-optical-size serif with its "wonk" axis switched on, so headings carry
+   a deliberate irregularity instead of the smooth default.
+
+   Deliberately absent: purple, glassmorphism, system-ui, Inter, card grids of
+   three equal columns.
+   ========================================================================== */
+
+:root {
+  /* ---------- Paper (document surface) ---------- */
+  --paper: #f2ecdf;
+  --paper-warm: #ede4d2;
+  --paper-deep: #e5dbc5;
+  --surface: #fbf6ea;
+  --surface-raised: #fffdf6;
+
+  /* ---------- Ink ---------- */
+  --ink: #17130e;
+  --ink-2: #4b4437;
+  --ink-3: #6f6659;
+  --ink-4: #786f61;
+
+  /* ---------- Rules ---------- */
+  --rule: #d6c9b1;
+  --rule-soft: #e2d8c4;
+  --rule-strong: #b7a684;
+
+  /* ---------- Chrome (rail) ---------- */
+  --chrome: #101c16;
+  --chrome-2: #182a21;
+  --chrome-3: #22382c;
+  --chrome-ink: #e8e0cf;
+  --chrome-ink-2: #9aa89b;
+  --chrome-ink-3: #7f9184;
+  --chrome-rule: #2b4034;
+
+  /* ---------- Accents ---------- */
+  --laterite: #ae3a1f;
+  --laterite-deep: #8a2b16;
+  --laterite-wash: #f0dcd2;
+  --sodium: #e9a13b;
+  --sodium-wash: #f7e6c9;
+  --ochre: #b8822a;
+  --moss: #2e4a38;
+  --moss-wash: #dfe6da;
+  --teal: #3e6b70;
+
+  /* ---------- Semantic ---------- */
+  --ok: #2c6647;
+  --ok-wash: #dce8dd;
+  --warn: #7a4e0b;
+  --warn-wash: #f4e5c9;
+  --bad: #a32b1b;
+  --bad-wash: #f1dbd4;
+  --info: #35566b;
+  --info-wash: #dfe8ee;
+
+  /* ---------- Data viz ---------- */
+  --viz-1: #ae3a1f;
+  --viz-2: #b8822a;
+  --viz-3: #3e6b70;
+  --viz-4: #2e4a38;
+  --viz-5: #7b4a36;
+  --rh-dry: #4e6e57;
+  --rh-ok: #8a9a5b;
+  --rh-watch: #c0a03a;
+  --rh-risk: #bb6a2a;
+  --rh-critical: #ae3a1f;
+
+  /* ---------- Type ---------- */
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-ui: 'Schibsted Grotesk', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Azeret Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.8125rem;
+  --step-1: 0.9375rem;
+  --step-2: 1.0625rem;
+  --step-3: 1.25rem;
+  --step-4: 1.5rem;
+  --step-5: 1.875rem;
+  --step-6: 2.375rem;
+  --step-7: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem);
+  --step-8: clamp(3.25rem, 2rem + 5.4vw, 6rem);
+
+  /* ---------- Space ---------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  /* ---------- Radii — deliberately small; paper does not have round corners */
+  --r-xs: 2px;
+  --r-sm: 3px;
+  --r-md: 5px;
+  --r-lg: 8px;
+  --r-pill: 999px;
+
+  /* ---------- Elevation — barely there, a lit sheet of paper */
+  --shadow-1: 0 1px 0 rgba(23, 19, 14, 0.04), 0 1px 2px rgba(23, 19, 14, 0.05);
+  --shadow-2: 0 2px 4px rgba(23, 19, 14, 0.06), 0 8px 24px -8px rgba(23, 19, 14, 0.14);
+  --shadow-3: 0 4px 12px rgba(23, 19, 14, 0.1), 0 24px 64px -16px rgba(23, 19, 14, 0.3);
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 380ms;
+  --dur-4: 640ms;
+  --dur-5: 900ms;
+
+  /* ---------- Layout ---------- */
+  --rail-w: 268px;
+  --page-max: 1180px;
+  --doc-gutter: clamp(1.25rem, 3.2vw, 3rem);
+}
+
+/* Density switch, driven by the persisted preference. */
+:root[data-density='compact'] {
+  --step-0: 0.75rem;
+  --step-1: 0.875rem;
+  --s-4: 0.75rem;
+  --s-5: 1.25rem;
+}

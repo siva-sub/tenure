@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://siva-sub.github.io/tenure/sitemap.xml

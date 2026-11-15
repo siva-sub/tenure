@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-SG">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#F2ECE1" />
+
+    <title>Tenure — the living record of a Singapore home</title>
+    <meta
+      name="description"
+      content="Tenure keeps the living record of a Singapore home: its energy performance, retrofit measures and their payback against the lease, maintenance responsibility, and live room-sensor and CT clamp telemetry."
+    />
+    <link rel="canonical" href="https://siva-sub.github.io/tenure/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tenure — the living record of a Singapore home" />
+    <meta
+      property="og:description"
+      content="Energy score, retrofit payback against a 99-year lease, town council and MCST maintenance routing, and live telemetry — in one record."
+    />
+    <meta property="og:locale" content="en_SG" />
+    <meta property="og:url" content="https://siva-sub.github.io/tenure/" />
+    <meta property="og:site_name" content="Tenure" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="favicon.svg" />
+
+    <!-- Self-hosted: no third-party font CDN in the critical path. -->
+    <link rel="stylesheet" href="fonts.css" />
+
+    <style>
+      /* Pre-paint shell: prevents a white flash before the stylesheet lands and
+         holds layout stable for the masthead. Kept inline and tiny on purpose. */
+      html {
+        background: #f2ece1;
+        color: #141210;
+      }
+      body {
+        margin: 0;
+      }
+      #root:empty::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            transparent 0 11px,
+            rgba(20, 18, 16, 0.045) 11px 12px
+          );
+        mask-image: linear-gradient(180deg, #000, transparent 70%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="padding: 4rem 2rem; font: 400 1rem/1.6 Georgia, serif; max-width: 40rem">
+        <h1 style="font-size: 1.5rem">Tenure needs JavaScript</h1>
+        <p>
+          The living record renders its telemetry and lease calculations in the browser. Please enable
+          JavaScript to view this property record.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

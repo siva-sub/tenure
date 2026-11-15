@@ -1,0 +1,999 @@
+/* ==========================================================================
+   Page-level composition
+   ========================================================================== */
+
+.main__scroll {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.stack {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.stack--tight {
+  gap: var(--s-3);
+}
+
+/* --------------------------------------------------------------------------
+   Title block — the front sheet of the record
+   -------------------------------------------------------------------------- */
+
+.titleblock {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-6);
+  align-items: start;
+  padding-bottom: var(--s-6);
+  margin-bottom: var(--s-6);
+  border-bottom: 1px solid var(--rule-strong);
+  position: relative;
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--sodium-wash) 34%, transparent), transparent 62%);
+}
+
+.titleblock::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: clamp(80px, 22%, 220px);
+  background: var(--laterite);
+  transform-origin: left center;
+  animation: draw-rule var(--dur-5) var(--ease-out) both;
+}
+
+.titleblock__main {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.titleblock__title {
+  font-size: var(--step-8);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
+  font-variation-settings: 'SOFT' 18, 'WONK' 1, 'opsz' 144;
+}
+
+.titleblock__unit {
+  display: block;
+  margin-top: 0.28em;
+  font-family: var(--font-mono);
+  font-size: 0.34em;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--laterite);
+  font-variation-settings: normal;
+}
+
+/* The rubber stamp: the band, pressed onto the sheet. */
+.stamp {
+  display: grid;
+  justify-items: center;
+  gap: 0.1em;
+  padding: var(--s-4) var(--s-5);
+  border: 2px solid var(--laterite);
+  border-radius: 3px;
+  color: var(--laterite);
+  transform: rotate(-3.5deg);
+  transform-origin: center;
+  animation: stamp var(--dur-5) var(--ease-spring) 0.35s both;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--laterite) 22%, transparent);
+}
+
+.stamp__label {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.stamp__band {
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 0.9;
+  font-weight: 500;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1, 'opsz' 96;
+}
+
+.stamp__meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.45;
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Lease header figures
+   -------------------------------------------------------------------------- */
+
+.lease-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6);
+  padding-bottom: var(--s-4);
+}
+
+.lease-head > div {
+  display: grid;
+  gap: 2px;
+}
+
+.lease-head__value {
+  font-family: var(--font-display);
+  font-size: var(--step-5);
+  font-weight: 400;
+  font-variation-settings: 'SOFT' 24, 'WONK' 1, 'opsz' 48;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--laterite);
+}
+
+.lease-head__value--muted {
+  color: var(--ink-3);
+  font-size: var(--step-4);
+}
+
+/* --------------------------------------------------------------------------
+   Dial facts
+   -------------------------------------------------------------------------- */
+
+.dial-facts {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--rule-soft);
+}
+
+.dial-facts > div {
+  display: grid;
+  gap: 1px;
+}
+
+.dial-facts .mono {
+  font-size: var(--step-0);
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Attribution split bars
+   -------------------------------------------------------------------------- */
+
+.split {
+  display: grid;
+  gap: 4px;
+}
+
+.split__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.split__label {
+  font-size: var(--step-0);
+  color: var(--ink-2);
+}
+
+.split__value {
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+.split__track {
+  height: 7px;
+  background: var(--paper-deep);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.split__fill {
+  height: 100%;
+  transform-origin: left center;
+  animation: draw-rule var(--dur-4) var(--ease-out) both;
+}
+
+.split__fill--0 {
+  background: var(--viz-1);
+}
+.split__fill--1 {
+  background: var(--viz-2);
+}
+.split__fill--2 {
+  background: var(--viz-3);
+}
+.split__fill--3 {
+  background: var(--viz-4);
+}
+
+/* --------------------------------------------------------------------------
+   Case list on the record page
+   -------------------------------------------------------------------------- */
+
+.caselist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.caselist__item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-5);
+  border-bottom: 1px solid var(--rule-soft);
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.caselist__item:hover {
+  background: color-mix(in srgb, var(--paper) 62%, transparent);
+}
+
+.caselist__item:last-child {
+  border-bottom: 0;
+}
+
+.caselist__main {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.caselist__title {
+  font-size: var(--step-0);
+  font-weight: 560;
+  color: var(--ink);
+}
+
+.caselist__meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   Jump cards
+   -------------------------------------------------------------------------- */
+
+.jump {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--ink);
+  border-radius: 2px;
+  background: var(--surface);
+  text-decoration: none;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    background var(--dur-2) var(--ease-out);
+}
+
+.jump:hover {
+  transform: translateY(-3px);
+  border-top-color: var(--laterite);
+  background: var(--surface-raised);
+}
+
+.jump__num {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  color: var(--laterite);
+}
+
+.jump__title {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 420;
+  font-variation-settings: 'SOFT' 28, 'WONK' 1, 'opsz' 40;
+  letter-spacing: -0.015em;
+}
+
+.jump__body {
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   Stat card — a schedule entry, not a box
+   -------------------------------------------------------------------------- */
+
+.statcard {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--ink);
+  border-radius: 2px;
+}
+
+.statcard .stat__value {
+  font-size: var(--step-5);
+}
+
+/* --------------------------------------------------------------------------
+   Score breakdown
+   -------------------------------------------------------------------------- */
+
+.score-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.breakdown {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.breakdown__row {
+  display: grid;
+  gap: 3px;
+  padding-bottom: var(--s-3);
+  border-bottom: 1px dotted var(--rule);
+}
+
+.breakdown__row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.breakdown__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.breakdown__label {
+  font-size: var(--step-0);
+  font-weight: 600;
+}
+
+.breakdown__score {
+  font-size: var(--step--1);
+  color: var(--ink);
+}
+
+.breakdown__track {
+  height: 5px;
+  background: var(--paper-deep);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.breakdown__fill {
+  height: 100%;
+  animation: draw-rule var(--dur-4) var(--ease-out) both;
+}
+
+.breakdown__fill[data-tone='ok'] {
+  background: var(--ok);
+}
+.breakdown__fill[data-tone='warn'] {
+  background: var(--ochre);
+}
+.breakdown__fill[data-tone='bad'] {
+  background: var(--laterite);
+}
+
+.breakdown__note {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+@media (max-width: 760px) {
+  .score-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Legend row
+   -------------------------------------------------------------------------- */
+
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  margin-top: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.legend-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
+.legend-row span::before {
+  content: '';
+  width: 10px;
+  height: 3px;
+  background: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   90-day trend
+   -------------------------------------------------------------------------- */
+
+.trend {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 180px;
+  padding-top: var(--s-2);
+}
+
+.trend__col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.trend__bar {
+  width: 100%;
+  background: var(--viz-3);
+  border-radius: 1px 1px 0 0;
+  transform-origin: bottom;
+  animation: grow-bar var(--dur-4) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 4ms);
+  opacity: 0.82;
+}
+
+.trend__col:hover .trend__bar {
+  opacity: 1;
+  background: var(--laterite);
+}
+
+.trend__threshold {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px dashed var(--laterite);
+}
+
+.trend__axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+/* --------------------------------------------------------------------------
+   Tariff windows
+   -------------------------------------------------------------------------- */
+
+.windowlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.windowlist li {
+  display: grid;
+  grid-template-columns: 10px 1fr auto auto;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--step-0);
+}
+
+.windowlist__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 1px;
+}
+
+.windowlist__swatch--offpeak {
+  background: var(--moss);
+}
+.windowlist__swatch--day {
+  background: var(--rule-strong);
+}
+.windowlist__swatch--shoulder {
+  background: var(--ochre);
+}
+.windowlist__swatch--peak {
+  background: var(--sodium);
+}
+.windowlist__swatch--late {
+  background: var(--moss-wash);
+  border: 1px solid var(--moss);
+}
+
+/* --------------------------------------------------------------------------
+   Tick lists
+   -------------------------------------------------------------------------- */
+
+.ticks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.ticks li {
+  position: relative;
+  padding-left: 1.1em;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.ticks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--laterite);
+  transform: rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Expandable row detail
+   -------------------------------------------------------------------------- */
+
+.rowdetail {
+  margin-top: var(--s-2);
+  font-size: var(--step--1);
+}
+
+.rowdetail summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.rowdetail summary::-webkit-details-marker {
+  display: none;
+}
+
+.rowdetail summary::before {
+  content: '+';
+  font-size: 12px;
+  color: var(--laterite);
+}
+
+.rowdetail[open] summary::before {
+  content: '−';
+}
+
+.rowdetail summary:hover {
+  color: var(--laterite);
+}
+
+.rowdetail p {
+  margin-top: var(--s-2);
+  max-width: 52ch;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+/* --------------------------------------------------------------------------
+   Maintenance board
+   -------------------------------------------------------------------------- */
+
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: start;
+}
+
+.board__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.case {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  padding: var(--s-3);
+  border: 1px solid transparent;
+  border-left: 2px solid var(--rule);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.case:hover {
+  background: var(--surface);
+  border-left-color: var(--rule-strong);
+}
+
+.case.is-active {
+  background: var(--surface);
+  border-color: var(--rule);
+  border-left-color: var(--laterite);
+  box-shadow: var(--shadow-1);
+}
+
+.case__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+}
+
+.case__date {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+.case__title {
+  font-size: var(--step-0);
+  font-weight: 560;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.case__meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+.case-detail {
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+}
+
+.case-detail__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.case-detail__title {
+  margin-top: var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 400;
+  font-variation-settings: 'SOFT' 28, 'WONK' 1, 'opsz' 48;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+}
+
+.case-detail__body {
+  font-size: var(--step-1);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Room cards
+   -------------------------------------------------------------------------- */
+
+.roomcard {
+  height: 100%;
+}
+
+.roomcard__figures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+}
+
+.roomcard__figures > div {
+  display: grid;
+  gap: 1px;
+}
+
+.roomcard__value {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 420;
+  font-variation-settings: 'SOFT' 26, 'WONK' 1, 'opsz' 40;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.riskbar {
+  height: 6px;
+  background: var(--paper-deep);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.riskbar--inline {
+  min-width: 60px;
+  max-width: 120px;
+}
+
+.riskbar__fill {
+  height: 100%;
+  animation: draw-rule var(--dur-4) var(--ease-out) both;
+}
+
+.riskbar__fill[data-tone='ok'] {
+  background: var(--ok);
+}
+.riskbar__fill[data-tone='info'] {
+  background: var(--ochre);
+}
+.riskbar__fill[data-tone='warn'] {
+  background: var(--sodium);
+}
+.riskbar__fill[data-tone='bad'] {
+  background: var(--laterite);
+}
+
+/* --------------------------------------------------------------------------
+   Coverage bar
+   -------------------------------------------------------------------------- */
+
+.coverage-bar {
+  display: flex;
+  height: 16px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+}
+
+.coverage-bar__seg {
+  height: 100%;
+  transition: width var(--dur-3) var(--ease-out);
+}
+
+.coverage-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.coverage-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 3px 8px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: var(--surface-raised);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out);
+}
+
+.coverage-key:hover {
+  border-color: var(--rule-strong);
+}
+
+.coverage-key.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper-warm);
+}
+
+.coverage-key.is-active .mono {
+  color: var(--paper-warm);
+  opacity: 0.7;
+}
+
+.coverage-key__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   Parity rows
+   -------------------------------------------------------------------------- */
+
+.parity {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.parity__row {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.parity__row:hover {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.parity__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.parity__competitor {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+}
+
+.parity__capability {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 380;
+  font-variation-settings: 'SOFT' 30, 'WONK' 1, 'opsz' 40;
+  letter-spacing: -0.012em;
+  line-height: 1.28;
+  max-width: 62ch;
+  color: var(--ink);
+}
+
+.parity__why {
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 76ch;
+}
+
+.parity__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+  padding-top: 2px;
+}
+
+.parity__foot .mono {
+  color: var(--ink-2);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 780px) {
+  .titleblock {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+
+  .stamp {
+    justify-self: start;
+    transform: rotate(-2deg);
+    padding: var(--s-3) var(--s-4);
+  }
+
+  .stamp__band {
+    font-size: 2.4rem;
+  }
+
+  .titleblock__title {
+    max-width: none;
+  }
+
+  .titleblock__unit {
+    font-size: 0.4em;
+  }
+
+  .lease-head {
+    gap: var(--s-4);
+  }
+
+  .roomcard__figures {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .jump,
+  .statcard {
+    padding: var(--s-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print — the record as a document
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .rail,
+  .topbar,
+  .toasts,
+  .stamp {
+    display: none !important;
+  }
+
+  .shell {
+    display: block;
+  }
+
+  .page {
+    padding: 0;
+    max-width: none;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  /* Scroll-revealed sections are opacity:0 until an observer fires. Printing
+     never scrolls, so without this the record would print with holes in it. */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
